@@ -10,6 +10,7 @@ html {
   font-size: 500%;
   font-weight: bolder;
   padding: 25px 0;
+  color: black;
 }
 #start, #pause {
   width: 100px;
@@ -20,6 +21,7 @@ html {
 #elapsedTime {
   font-weight: bold;
   font-size: 150%;
+  color: black;
 }
 
 /* Sun rise thanks to https://codepen.io/TheBrutalTooth/pen/KWwgQo */ 
@@ -28,7 +30,8 @@ html {
 #sea,
 #sky,
 #sun,
-#light {
+#light,
+#description {
   position: absolute;
 }
 
@@ -38,6 +41,13 @@ html {
   overflow: hidden;
   left: 50%;
   margin-left: -50%;
+}
+
+#description {
+  z-index: 100;
+  width: 100%;
+  text-align: center;
+  color: sandybrown;
 }
 
 #sky {
