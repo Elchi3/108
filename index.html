@@ -14,7 +14,7 @@
     <div id="container">
       <div id="description">
         <h1>108 Sun Salutations</h1>
-        <p>Click "Start" and say "next" if you finished a sun salutation (or say the current number). <br> Say "done" if you are done!</p>
+        <button popovertarget="instructions">Help</button><br>
         <button id="start">Start</button>
         <button id="pause">Pause</button>
         <p id="elapsedTime">00:00</p>
@@ -25,6 +25,18 @@
         <div id="light"></div>
       </div>
       <div id="sun"></div>
+    </div>
+
+    <div id="instructions" popover>
+      <p><a href="https://en.wikipedia.org/wiki/Sun_Salutation">Sun Salutations</a> is a practice in yoga consisting of a flow sequence of twelve linked asanas.</p>
+      <p>Gradually build up to 108!</p>
+      <br>
+      <p>After pressing "Start", the following voice commands help to keep track of the number of sun salutations in your practice:</p>
+      <ul>
+        <li>Say a number or "next" to go to the next round.</li>
+        <li>Say "pause" to halt.</li>
+        <li>Say "done" if you are finished.</li>
+      </ul>
     </div>
 
     <script src="script.js"></script>

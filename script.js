@@ -6,12 +6,21 @@ const lightElement = document.getElementById("light");
 const startButton = document.getElementById("start");
 const pauseButton = document.getElementById("pause");
 const elapsedTimeElement = document.getElementById('elapsedTime');
-let wakeLock = null;
-let count = 0;
 
+let count = 0;
 let startTime;
 let elapsedTime = 0;
 let interval;
+let recognizing = false;
+
+const recognition = new SpeechRecognition();
+recognition.continuous = true;
+recognition.lang = "en-US";
+recognition.interimResults = false;
+recognition.maxAlternatives = 1;
+recognition.onstart = () => recognizing = true;
+recognition.onend = () => recognizing = false;
+recognition.onerror = () => recognizing = false;
 
 const motivations = [
   "Well done!",
@@ -108,60 +117,53 @@ function speak(text) {
   utterance.pitch = 1;
   const voices = synth.getVoices();
   utterance.voice = voices.find(voice => voice.name === "Daniel");
-  setTimeout(() => synth.speak(utterance), 1800);
+  synth.speak(utterance);
 }
 
-const recognition = new SpeechRecognition();
-recognition.continuous = true;
-recognition.lang = "en-US";
-recognition.interimResults = false;
-recognition.maxAlternatives = 1;
+function pause() {
+  clearInterval(interval);
+  elapsedTime = (new Date() - startTime) / 1000;
+}
 
-startButton.addEventListener("click", async () => {
+async function start() {
   startTime = new Date() - elapsedTime * 1000;
   interval = setInterval(() => {
     updateElapsedTime(startTime);
   }, 1000);
 
-  recognition.start();
-
-  // https://stackoverflow.com/questions/67655133/when-will-speechsynthesis-speak-work-on-ios-safari
-  new SpeechSynthesisUtterance('');
-  
-  try {
-    wakeLock = await navigator.wakeLock.request("screen");
-  } catch(error) {
-    console.log(`${err.name}, ${err.message}`);
+  if (!recognizing) {
+    recognition.start();
   }
-});
+  speak("Let's go!");
+}
 
-pauseButton.addEventListener("click", () => {
-  clearInterval(interval);
-  elapsedTime = (new Date() - startTime) / 1000;
-  recognition.stop();
-  
-  wakeLock.release().then(() => {
-    wakeLock = null;
-  });
-});
+startButton.addEventListener("click", start);
+pauseButton.addEventListener("click", pause);
 
 recognition.addEventListener("result", (event) => {
-  let done = false;
+  let announceRound = false;
   let transcript = event.results[event.results.length-1][0].transcript.toLowerCase();
   switch (transcript) {
     case 'next':
       count++;
+      announceRound = true;
+      break;
+    case 'start':
+      start();
+      break;
+    case 'pause':
+      pause();
       break;
     case 'done':
-      pauseButton.click();
       speak(`Congratulations on ${count} sun salutations! Your time: ${elapsedTimeElement.innerText}. Well done!`);
-      done = true;
+      pause();
       break;
     default:
       count = wordsToDigits(transcript);
+      announceRound = true;
   }
    
-  if (Number.isInteger(count) && count > 0 && count < 109 && !done) {
+  if (Number.isInteger(count) && count > 0 && count < 109 && announceRound) {
     // Update counter display
     countElement.innerText = count;
     
@@ -181,5 +183,5 @@ recognition.addEventListener("result", (event) => {
     }
     speak(round);
   }
-  //console.log(`Transcript: ${transcript}. Confidence: ${event.results[0][0].confidence}`);
+  // console.log(`Transcript: ${transcript}. Confidence: ${event.results[0][0].confidence}`);
 });
