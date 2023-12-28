@@ -37,9 +37,11 @@ p {
 #instructions {
   text-align: left;
   position: absolute;
-  width: 100%;
+  width: calc(100% - 20px);
   height: 40%;
   top: 60%;
+  padding: 10px;
+  border: 0;
   opacity: 0.5;
 }
 

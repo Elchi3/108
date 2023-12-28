@@ -132,7 +132,11 @@ function speak(text) {
 function pause() {
   clearInterval(interval);
   elapsedTime = (new Date() - startTime) / 1000;
-  wakeLock.release().then(() => wakeLock = null);
+  try {
+    wakeLock.release().then(() => wakeLock = null);
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 function start() {
@@ -189,9 +193,10 @@ recognition.addEventListener("result", (event) => {
     // Read out current round
     // Don't always add a motivation. Extend the range to 15 undefined values.
     const randomMotivation = motivations[Math.floor(Math.random() * motivations.length + 15)];
-    let round = `Round ${count}. ${randomMotivation ? randomMotivation : ''}`;
+    let round = `Round ${count} completed. ${randomMotivation ? randomMotivation : ''}`;
     if (count === 108) {
-      round = `Round 108. Final round!`;
+      round = `Congratulations on ${count} sun salutations! Your time: ${elapsedTimeElement.innerText}. Well done!`;
+      pause();
     }
     speak(round);
   }
