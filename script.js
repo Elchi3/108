@@ -124,6 +124,9 @@ startButton.addEventListener("click", async () => {
   }, 1000);
 
   recognition.start();
+
+  // https://stackoverflow.com/questions/67655133/when-will-speechsynthesis-speak-work-on-ios-safari
+  new SpeechSynthesisUtterance('');
   
   try {
     wakeLock = await navigator.wakeLock.request("screen");
