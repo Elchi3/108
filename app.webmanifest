@@ -1,0 +1,23 @@
+{
+  "name": "108",
+  "description": "108 Sun Salutations",
+  "launch_path": "/index.html",
+  "icons": {
+    "512": "sun-512.png",
+    "128": "sun-128.png"
+  },
+  "developer": {
+    "name": "Florian Scholz",
+    "url": "https://florianscholz.com"
+  },
+  "default_locale": "en",
+  "orientation": "portrait-primary",
+  "permissions": {
+    "audio-capture" : {
+      "description" : "Audio capture"
+    },
+    "speech-recognition" : {
+      "description" : "Speech recognition"
+    }
+  }
+}
