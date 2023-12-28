@@ -6,7 +6,7 @@ const lightElement = document.getElementById("light");
 const startButton = document.getElementById("start");
 const pauseButton = document.getElementById("pause");
 const elapsedTimeElement = document.getElementById('elapsedTime');
-
+let wakeLock = null;
 let count = 0;
 let startTime;
 let elapsedTime = 0;
@@ -21,6 +21,15 @@ recognition.maxAlternatives = 1;
 recognition.onstart = () => recognizing = true;
 recognition.onend = () => recognizing = false;
 recognition.onerror = () => recognizing = false;
+
+async function requestWakeLock() {
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+    console.log("Wake lock requested!");
+  } catch (err) {
+    console.log(err.message);
+  }
+}
 
 const motivations = [
   "Well done!",
@@ -123,13 +132,16 @@ function speak(text) {
 function pause() {
   clearInterval(interval);
   elapsedTime = (new Date() - startTime) / 1000;
+  wakeLock.release().then(() => wakeLock = null);
 }
 
-async function start() {
+function start() {
   startTime = new Date() - elapsedTime * 1000;
   interval = setInterval(() => {
     updateElapsedTime(startTime);
   }, 1000);
+
+  requestWakeLock();
 
   if (!recognizing) {
     recognition.start();
