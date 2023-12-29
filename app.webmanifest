@@ -1,11 +1,19 @@
 {
-  "name": "108",
-  "description": "108 Sun Salutations",
-  "launch_path": "/index.html",
-  "icons": {
-    "512": "sun-512.png",
-    "128": "sun-128.png"
-  },
+  "short_name": "108",
+  "name": "108 Sun Salutations",
+  "description": "Voice controlled web app that helps to count 108 yoga sun salutations.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "icons/sun-512.png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "icons/sun-128.png",
+      "sizes": "128x128"
+    }
+  ],
   "developer": {
     "name": "Florian Scholz",
     "url": "https://florianscholz.com"

@@ -5,6 +5,7 @@ const sunElement = document.getElementById("sun");
 const lightElement = document.getElementById("light");
 const startButton = document.getElementById("start");
 const pauseButton = document.getElementById("pause");
+const resetButton = document.getElementById("reset");
 const elapsedTimeElement = document.getElementById('elapsedTime');
 let wakeLock = null;
 let count = 0;
@@ -131,7 +132,9 @@ function speak(text) {
 
 function pause() {
   clearInterval(interval);
-  elapsedTime = (new Date() - startTime) / 1000;
+  if (startTime > 0) {
+    elapsedTime = (new Date() - startTime) / 1000;
+  }
   try {
     wakeLock.release().then(() => wakeLock = null);
   } catch (err) {
@@ -153,8 +156,13 @@ function start() {
   speak("Let's go!");
 }
 
+function reset() {
+  window.location.reload();
+}
+
 startButton.addEventListener("click", start);
 pauseButton.addEventListener("click", pause);
+resetButton.addEventListener('click', reset);
 
 recognition.addEventListener("result", (event) => {
   let announceRound = false;

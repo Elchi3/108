@@ -1,6 +1,7 @@
 * {
   margin: 0;
 }
+
 html {
   background: black;
   overflow: hidden;
@@ -22,7 +23,7 @@ p {
   color: black;
 }
 
-#start, #pause {
+#start, #pause, #reset {
   width: 100px;
   height: 100px;
   margin: 20px 0;
@@ -37,12 +38,13 @@ p {
 #instructions {
   text-align: left;
   position: absolute;
-  width: calc(100% - 20px);
+  width: calc(100% - 10px);
   height: 40%;
   top: 60%;
-  padding: 10px;
+  padding: 5px;
   border: 0;
-  opacity: 0.5;
+  font-family: sans-serif;
+  background: lightgray;
 }
 
 /* Sun rise thanks to https://codepen.io/TheBrutalTooth/pen/KWwgQo */ 
@@ -70,6 +72,7 @@ p {
   font-family: sans-serif;
   text-align: center;
   color: sandybrown;
+  margin: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 #sky {
@@ -80,7 +83,7 @@ p {
   background: radial-gradient(at 50% 70%, #820, #610, #400, #100);
   z-index: 30;
   text-align: center;
-  color: sandybrown;
+  color: #f4a460;
 }
 
 #sea {
