@@ -191,14 +191,14 @@ recognition.addEventListener("result", (event) => {
     lightElement.style.opacity = count / 150;
 
     // Read out current round
-    // Don't always add a motivation. Extend the range to 15 undefined values.
-    const randomMotivation = motivations[Math.floor(Math.random() * motivations.length + 15)];
-    let round = `Round ${count} completed. ${randomMotivation ? randomMotivation : ''}`;
+    // Sometimes add a random motivation
+    const randomMotivation = motivations[Math.floor(Math.random() * motivations.length)];
+    let round = `Round ${count} completed. ${Math.random() < 0.5 ? randomMotivation : ''}`;
     if (count === 108) {
       round = `Congratulations on ${count} sun salutations! Your time: ${elapsedTimeElement.innerText}. Well done!`;
       pause();
     }
     speak(round);
   }
-  // console.log(`Transcript: ${transcript}. Confidence: ${event.results[0][0].confidence}`);
+  console.log(`Transcript: ${transcript}. Confidence: ${event.results[0][0].confidence}`);
 });
