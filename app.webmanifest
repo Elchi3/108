@@ -2,7 +2,7 @@
   "short_name": "108",
   "name": "108 Sun Salutations",
   "description": "Voice controlled web app that helps to count 108 yoga sun salutations.",
-  "start_url": "/index.html",
+  "start_url": "https://florianscholz.com/108/index.html",
   "display": "standalone",
   "icons": [
     {
